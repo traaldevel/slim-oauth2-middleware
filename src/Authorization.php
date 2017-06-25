@@ -82,6 +82,8 @@ class Authorization implements MiddlewareInterface
         }
 
         $response = ResponseBridge::fromOauth2($this->server->getResponse());
+        // :HACK: Temporary hack, because CORS Header not added by the middleware palanik/corsslim
+        $response = $response->withHeader("Access-Control-Allow-Origin", "*");
 
         if ($response->hasHeader('Content-Type')) {
             return $response;
